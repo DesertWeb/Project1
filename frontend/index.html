@@ -1,22 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Case Tracker</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entity Management</title>
+    <link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script defer src="client.js"></script>
 </head>
 <body>
-  <form id="form">
-    <input type="hidden" id="id" />
-    <label>Date: <input type="datetime-local" id="date" /></label>
-    <label>Case Overview: <textarea id="CaseOverview"></textarea></label>
-    <label>Evidence: <textarea id="Evidence"></textarea></label>
-    <label>Legal Process: <textarea id="LegalProcess"></textarea></label>
-    <label>Updates: <textarea id="Updates"></textarea></label>
-    <button type="submit">Save</button>
-    <button type="button" id="resetBtn">Reset</button>
-  </form>
-  <div id="list"></div>
-  <script src="app.js"></script>
+    <div class="container">
+        <div class="form-group">
+            <input type="text" id="id" placeholder="Entity ID">
+        </div>
+        <div class="form-group">
+            <input type="text" id="name" placeholder="Name">
+            <input type="number" id="level" placeholder="Level">
+        </div>
+        <div class="button-group">
+            <button id="fetchAll">Fetch all</button>
+            <button id="fetchById">Fetch by ID</button>
+            <button id="insertButton">Insert</button>
+            <button id="updateButton">Update</button>
+            <button id="deleteButton">Delete</button>
+        </div>
+
+        <div class="message" id="message"></div>
+    </div>
 </body>
 </html>
