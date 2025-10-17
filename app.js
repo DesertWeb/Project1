@@ -4,8 +4,8 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseKey = process.env.SUPABASE_KEY;
+const supabaseUrl = "https://mxkdnzuwqwaexmpfshir.supabase.co"
+const supabaseKey = 'sb_publishable_U5xeCDZNs_potUNZLjhs2A_mVAPTdBS'
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 const app = express();
