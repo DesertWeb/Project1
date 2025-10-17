@@ -1,10 +1,11 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const supabaseUrl = 'https://bawqpetcicwqaejnvuro.supabase.co';
-    const supabaseKey = "sb_publishable_WZH697QGccpGbRrACmm5Ew_QoNQNAx1";
+    const apiBase = "http://localhost:3000/CriminalCases";
 
-    const nameInput = document.getElementById("name");
-    const levelInput = document.getElementById("level");
     const idInput = document.getElementById("id");
+    const overviewInput = document.getElementById("CaseOverview");
+    const evidenceInput = document.getElementById("Evidence");
+    const processInput = document.getElementById("LegalProcess");
+    const updatesInput = document.getElementById("Updates");
     const messageDiv = document.getElementById("message");
 
     const fetchAllButton = document.getElementById("fetchAll");
@@ -21,82 +22,65 @@ document.addEventListener("DOMContentLoaded", () => {
 
     fetchAllButton.addEventListener("click", async () => {
         try {
-            const res = await fetch(`${supabaseUrl}/rest/v1/UserData`, {
-                method: "GET",
-                headers: {
-                    "apikey": supabaseKey,
-                    "Authorization": `Bearer ${supabaseKey}`,
-                    "Content-Type": "application/json"
-                }
-            });
-            if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+            const res = await fetch(apiBase);
             const data = await res.json();
-            showMessage(`All users: ${JSON.stringify(data)}`);
+            showMessage(`All cases: ${JSON.stringify(data, null, 2)}`);
         } catch (err) {
             showMessage(`Error fetching all: ${err.message}`, true);
         }
     });
 
     fetchByIdButton.addEventListener("click", async () => {
+        const id = idInput.value.trim();
+        if (!id) return showMessage("ID is required", true);
+
         try {
-            const id = idInput.value.trim();
-            if (!id) return showMessage("ID is required", true);
-            const res = await fetch(`${supabaseUrl}/rest/v1/UserData?id=eq.${id}`, {
-                method: "GET",
-                headers: {
-                    "apikey": supabaseKey,
-                    "Authorization": `Bearer ${supabaseKey}`,
-                    "Content-Type": "application/json"
-                }
-            });
-            if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-            const data = await res.json();
-            showMessage(`User: ${JSON.stringify(data[0])}`);
+            const res = await fetch(`${apiBase}`);
+            const all = await res.json();
+            const caseData = all.find(c => c.id == id);
+            if (!caseData) return showMessage("Case not found", true);
+            showMessage(JSON.stringify(caseData, null, 2));
         } catch (err) {
-            showMessage(`Error fetching by ID: ${err.message}`, true);
+            showMessage(`Error: ${err.message}`, true);
         }
     });
 
     insertButton.addEventListener("click", async () => {
         try {
-            const name = nameInput.value.trim();
-            const level = parseInt(levelInput.value);
-            if (!name || isNaN(level)) return showMessage("Invalid name or level", true);
-            const res = await fetch(`${supabaseUrl}/rest/v1/UserData`, {
+            const CaseOverview = overviewInput.value.trim();
+            const Evidence = evidenceInput.value.trim();
+            const LegalProcess = processInput.value.trim();
+            const Updates = updatesInput.value.trim();
+
+            const res = await fetch(apiBase, {
                 method: "POST",
-                headers: {
-                    "apikey": supabaseKey,
-                    "Authorization": `Bearer ${supabaseKey}`,
-                    "Content-Type": "application/json",
-                    "Prefer": "return=representation"
-                },
-                body: JSON.stringify([{ name, level }])
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ CaseOverview, Evidence, LegalProcess, Updates })
             });
-            if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+
             const data = await res.json();
-            showMessage(`Data inserted: ${JSON.stringify(data)}`);
+            showMessage(`Inserted: ${JSON.stringify(data)}`);
         } catch (err) {
             showMessage(`Insert error: ${err.message}`, true);
         }
     });
 
     updateButton.addEventListener("click", async () => {
+        const id = idInput.value.trim();
+        if (!id) return showMessage("ID is required", true);
+
         try {
-            const id = idInput.value.trim();
-            const name = nameInput.value.trim();
-            const level = parseInt(levelInput.value);
-            if (!id || !name || isNaN(level)) return showMessage("Invalid ID, name, or level", true);
-            const res = await fetch(`${supabaseUrl}/rest/v1/UserData?id=eq.${id}`, {
+            const res = await fetch(`${apiBase}/${id}`, {
                 method: "PATCH",
-                headers: {
-                    "apikey": supabaseKey,
-                    "Authorization": `Bearer ${supabaseKey}`,
-                    "Content-Type": "application/json",
-                    "Prefer": "return=representation"
-                },
-                body: JSON.stringify({ name, level })
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    CaseOverview: overviewInput.value.trim(),
+                    Evidence: evidenceInput.value.trim(),
+                    LegalProcess: processInput.value.trim(),
+                    Updates: updatesInput.value.trim()
+                })
             });
-            if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+
             const data = await res.json();
             showMessage(`Updated: ${JSON.stringify(data)}`);
         } catch (err) {
@@ -105,19 +89,13 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     deleteButton.addEventListener("click", async () => {
+        const id = idInput.value.trim();
+        if (!id) return showMessage("ID is required", true);
+
         try {
-            const id = idInput.value.trim();
-            if (!id) return showMessage("ID is required", true);
-            const res = await fetch(`${supabaseUrl}/rest/v1/UserData?id=eq.${id}`, {
-                method: "DELETE",
-                headers: {
-                    "apikey": supabaseKey,
-                    "Authorization": `Bearer ${supabaseKey}`,
-                    "Content-Type": "application/json"
-                }
-            });
-            if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-            showMessage(`User with ID ${id} deleted`);
+            const res = await fetch(`${apiBase}/${id}`, { method: "DELETE" });
+            const data = await res.json();
+            showMessage(data.message);
         } catch (err) {
             showMessage(`Delete error: ${err.message}`, true);
         }

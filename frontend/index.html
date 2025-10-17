@@ -3,29 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Entity Management</title>
+    <title>Criminal Cases</title>
     <link rel="stylesheet" href="style.css">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script defer src="client.js"></script>
 </head>
 <body>
     <div class="container">
-        <div class="form-group">
-            <input type="text" id="id" placeholder="Entity ID">
-        </div>
-        <div class="form-group">
-            <input type="text" id="name" placeholder="Name">
-            <input type="number" id="level" placeholder="Level">
-        </div>
+        <h2>Criminal Cases Management</h2>
+        <input type="text" id="id" placeholder="Case ID">
+        <textarea id="CaseOverview" placeholder="Case Overview"></textarea>
+        <textarea id="Evidence" placeholder="Evidence"></textarea>
+        <textarea id="LegalProcess" placeholder="Legal Process"></textarea>
+        <textarea id="Updates" placeholder="Updates"></textarea>
+
         <div class="button-group">
-            <button id="fetchAll">Fetch all</button>
+            <button id="fetchAll">Fetch All</button>
             <button id="fetchById">Fetch by ID</button>
             <button id="insertButton">Insert</button>
             <button id="updateButton">Update</button>
             <button id="deleteButton">Delete</button>
         </div>
 
-        <div class="message" id="message"></div>
+        <div id="message"></div>
     </div>
 </body>
 </html>
