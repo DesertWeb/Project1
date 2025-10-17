@@ -1,39 +1,22 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta charset="utf-8" />
-<title>Criminal Cases</title>
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8" />
+  <title>Case Tracker</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-<h1>Criminal Cases</h1>
-
-<div>
-  <h2>Create / Edit Case</h2>
   <form id="form">
     <input type="hidden" id="id" />
-
-    <label>Date <input id="date" type="datetime-local" /></label>
-    <label>Case Overview <textarea id="CaseOverview"></textarea></label>
-    <label>Evidence <textarea id="Evidence"></textarea></label>
-    <label>Legal Process <textarea id="LegalProcess"></textarea></label>
-    <label>Updates <textarea id="Updates"></textarea></label>
-
-    <div class="row">
-      <button type="submit">Save</button>
-      <button type="button" id="resetBtn">New</button>
-    </div>
+    <label>Date: <input type="datetime-local" id="date" /></label>
+    <label>Case Overview: <textarea id="CaseOverview"></textarea></label>
+    <label>Evidence: <textarea id="Evidence"></textarea></label>
+    <label>Legal Process: <textarea id="LegalProcess"></textarea></label>
+    <label>Updates: <textarea id="Updates"></textarea></label>
+    <button type="submit">Save</button>
+    <button type="button" id="resetBtn">Reset</button>
   </form>
-</div>
-
-<hr />
-
-<div>
-  <h2>List of Cases</h2>
   <div id="list"></div>
-</div>
-
-<script src="app.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
