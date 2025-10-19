@@ -29,7 +29,7 @@ app.get("/CriminalCases", async (req, res) => {
 });
 
 app.post("/CriminalCases", async (req, res) => {
-  const { CaseOverview, Evidence, LegalProcess, Updates } = req.body;
+  const { CaseOverview, Evidence, LegalProcess, Updates, JudgeName, VerdictDate } = req.body;
 
   if (!CaseOverview) {
     return res.status(400).json({ error: "CaseOverview is required" });
@@ -38,7 +38,7 @@ app.post("/CriminalCases", async (req, res) => {
   try {
     const { data, error } = await supabase
       .from('CriminalCases')
-      .insert([{ CaseOverview, Evidence, LegalProcess, Updates }])
+      .insert([{ CaseOverview, Evidence, LegalProcess, Updates, JudgeName, VerdictDate }])
       .select();
 
     if (error) throw error;
@@ -50,12 +50,12 @@ app.post("/CriminalCases", async (req, res) => {
 
 app.patch("/CriminalCases/:id", async (req, res) => {
   const { id } = req.params;
-  const { CaseOverview, Evidence, LegalProcess, Updates } = req.body;
+  const { CaseOverview, Evidence, LegalProcess, Updates, JudgeName, VerdictDate } = req.body;
 
   try {
     const { data, error } = await supabase
       .from('CriminalCases')
-      .update({ CaseOverview, Evidence, LegalProcess, Updates })
+      .update({ CaseOverview, Evidence, LegalProcess, Updates, JudgeName, VerdictDate })
       .eq('id', id)
       .select();
 
