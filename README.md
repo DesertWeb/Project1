@@ -24,6 +24,15 @@ Open your terminal in the project folder and run:
 node app.js
 
 
+
 ### View in your browser
 Open http://localhost:3000
  to access the app.
+
+
+
+### Update (Part B)
+
+Version 2.0 adds two new fields to the Crimina lCases entity:
+**JudgeName** (text) and **VerdictDate** (date).
+These fields are now available in the database, API, and frontend form.
