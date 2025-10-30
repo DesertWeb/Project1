@@ -11,6 +11,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const evidenceInput = document.getElementById("Evidence");
   const processInput = document.getElementById("LegalProcess");
   const updatesInput = document.getElementById("Updates");
+  const judgeInput = document.getElementById("JudgeName");
+  const verdictInput = document.getElementById("VerdictDate");
   const messageDiv = document.getElementById("message");
 
   const fetchAllButton = document.getElementById("fetchAll");
@@ -45,10 +47,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const Evidence = evidenceInput.value.trim();
     const LegalProcess = processInput.value.trim();
     const Updates = updatesInput.value.trim();
+    const JudgeName = judgeInput.value.trim();
+    const VerdictDate = verdictInput.value.trim();
 
     const { data, error } = await supabase
       .from("CriminalCases")
-      .insert([{ CaseOverview, Evidence, LegalProcess, Updates }])
+      .insert([{ CaseOverview, Evidence, LegalProcess, Updates, JudgeName, VerdictDate }])
       .select();
 
     if (error) return showMessage(error.message, true);
@@ -66,6 +70,8 @@ document.addEventListener("DOMContentLoaded", () => {
         Evidence: evidenceInput.value.trim(),
         LegalProcess: processInput.value.trim(),
         Updates: updatesInput.value.trim(),
+        JudgeName: judgeInput.value.trim(),
+        VerdictDate: verdictInput.value.trim(),
       })
       .eq("id", id)
       .select();
