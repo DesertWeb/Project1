@@ -4,8 +4,8 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const supabaseUrl = "https://mxkdnzuwqwaexmpfshir.supabase.co"
-const supabaseKey = 'sb_publishable_U5xeCDZNs_potUNZLjhs2A_mVAPTdBS'
+const supabaseUrl = "https://mxkdnzuwqwaexmpfshir.supabase.co";
+const supabaseKey = 'sb_publishable_U5xeCDZNs_potUNZLjhs2A_mVAPTdBS';
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 const app = express();
@@ -13,7 +13,6 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use(express.static("frontend"));
-
 
 function sendError(res, status, error, fieldErrors = []) {
     return res.status(status).json({
@@ -23,7 +22,6 @@ function sendError(res, status, error, fieldErrors = []) {
         fieldErrors
     });
 }
-
 
 function validateCasePayload(body) {
     const errors = [];
@@ -47,7 +45,6 @@ function validateCasePayload(body) {
     return errors;
 }
 
-
 app.get("/status", (req, res) => {
     res.json({ status: "Running" });
 });
@@ -61,21 +58,16 @@ app.get("/CriminalCases", async (req, res) => {
 
         if (error) throw error;
         res.json(data);
-
     } catch (err) {
         sendError(res, 500, err.message);
     }
 });
 
 app.post("/CriminalCases", async (req, res) => {
-
     const errors = validateCasePayload(req.body);
     if (errors.length > 0) {
         return sendError(res, 400, "Bad Request", errors);
     }
-
-  const { CaseOverview, Evidence, LegalProcess, Updates, JudgeName, VerdictDate } = req.body;
-
 
     try {
         const { data, error } = await supabase
@@ -83,17 +75,9 @@ app.post("/CriminalCases", async (req, res) => {
             .insert([req.body])
             .select();
 
-
         if (error) throw error;
 
-  try {
-    const { data, error } = await supabase
-      .from('CriminalCases')
-      .insert([{ CaseOverview, Evidence, LegalProcess, Updates, JudgeName, VerdictDate }])
-      .select();
-
         res.status(201).json(data[0]);
-
     } catch (err) {
         sendError(res, 500, err.message);
     }
@@ -105,15 +89,6 @@ app.patch("/CriminalCases/:id", async (req, res) => {
     if (isNaN(id)) {
         return sendError(res, 400, "ID must be numeric");
     }
-  const { id } = req.params;
-  const { CaseOverview, Evidence, LegalProcess, Updates, JudgeName, VerdictDate } = req.body;
-
-  try {
-    const { data, error } = await supabase
-      .from('CriminalCases')
-      .update({ CaseOverview, Evidence, LegalProcess, Updates, JudgeName, VerdictDate })
-      .eq('id', id)
-      .select();
 
     const errors = validateCasePayload(req.body);
     if (errors.length > 0) {
@@ -134,7 +109,6 @@ app.patch("/CriminalCases/:id", async (req, res) => {
         }
 
         res.json(data[0]);
-
     } catch (err) {
         sendError(res, 500, err.message);
     }
@@ -161,7 +135,6 @@ app.delete("/CriminalCases/:id", async (req, res) => {
         }
 
         res.json({ message: `Case ${id} deleted` });
-
     } catch (err) {
         sendError(res, 500, err.message);
     }
