@@ -5,26 +5,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Criminal Cases</title>
     <link rel="stylesheet" href="style.css">
-    <script defer src="client.js"></script>
-<script type="module" src="client.js"></script>
-
+    <script defer type="module" src="client.js"></script>
 </head>
 <body>
     <div class="container">
         <h2>Criminal Cases Management</h2>
-        <input type="text" id="id" placeholder="Case ID">
-        <textarea id="CaseOverview" placeholder="Case Overview"></textarea>
-        <textarea id="Evidence" placeholder="Evidence"></textarea>
-        <textarea id="LegalProcess" placeholder="Legal Process"></textarea>
-        <textarea id="Updates" placeholder="Updates"></textarea>
 
-        <div class="button-group">
-            <button id="fetchAll">Fetch All</button>
-            <button id="fetchById">Fetch by ID</button>
-            <button id="insertButton">Insert</button>
-            <button id="updateButton">Update</button>
-            <button id="deleteButton">Delete</button>
-        </div>
+        <form id="caseForm" novalidate>
+
+            <input type="text"
+                   id="id"
+                   placeholder="Case ID"
+                   required
+                   pattern="[0-9]+">
+
+            <textarea id="CaseOverview"
+                      placeholder="Case Overview"
+                      required
+                      minlength="5"></textarea>
+
+            <textarea id="Evidence"
+                      placeholder="Evidence"
+                      required
+                      minlength="3"></textarea>
+
+            <textarea id="LegalProcess"
+                      placeholder="Legal Process"
+                      required
+                      minlength="3"></textarea>
+
+            <textarea id="Updates"
+                      placeholder="Updates (optional)"
+                      minlength="3"></textarea>
+
+            <div class="button-group">
+                <button type="button" id="fetchAll">Fetch All</button>
+                <button type="button" id="fetchById">Fetch by ID</button>
+                <button type="submit" id="insertButton">Insert</button>
+                <button type="button" id="updateButton">Update</button>
+                <button type="button" id="deleteButton">Delete</button>
+            </div>
+        </form>
 
         <div id="message"></div>
     </div>
