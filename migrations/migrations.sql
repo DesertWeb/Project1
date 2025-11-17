@@ -5,5 +5,7 @@ create table public."CriminalCases" (
   "Evidence" text null,
   "LegalProcess" text null,
   "Updates" text null,
+  "JudgeName" text,
+  "VerdictDate" date,
   constraint CriminalCases_pkey primary key (id)
 ) TABLESPACE pg_default;

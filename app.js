@@ -68,10 +68,14 @@ app.get("/CriminalCases", async (req, res) => {
 });
 
 app.post("/CriminalCases", async (req, res) => {
+<<<<<<< HEAD
     const errors = validateCasePayload(req.body);
     if (errors.length > 0) {
         return sendError(res, 400, "Bad Request", errors);
     }
+=======
+  const { CaseOverview, Evidence, LegalProcess, Updates, JudgeName, VerdictDate } = req.body;
+>>>>>>> 80f49811ea23ad2be58cdf80d132f36ad48b3f57
 
     try {
         const { data, error } = await supabase
@@ -79,7 +83,15 @@ app.post("/CriminalCases", async (req, res) => {
             .insert([req.body])
             .select();
 
+<<<<<<< HEAD
         if (error) throw error;
+=======
+  try {
+    const { data, error } = await supabase
+      .from('CriminalCases')
+      .insert([{ CaseOverview, Evidence, LegalProcess, Updates, JudgeName, VerdictDate }])
+      .select();
+>>>>>>> 80f49811ea23ad2be58cdf80d132f36ad48b3f57
 
         res.status(201).json(data[0]);
 
@@ -89,11 +101,23 @@ app.post("/CriminalCases", async (req, res) => {
 });
 
 app.patch("/CriminalCases/:id", async (req, res) => {
+<<<<<<< HEAD
     const { id } = req.params;
 
     if (isNaN(id)) {
         return sendError(res, 400, "ID must be numeric");
     }
+=======
+  const { id } = req.params;
+  const { CaseOverview, Evidence, LegalProcess, Updates, JudgeName, VerdictDate } = req.body;
+
+  try {
+    const { data, error } = await supabase
+      .from('CriminalCases')
+      .update({ CaseOverview, Evidence, LegalProcess, Updates, JudgeName, VerdictDate })
+      .eq('id', id)
+      .select();
+>>>>>>> 80f49811ea23ad2be58cdf80d132f36ad48b3f57
 
     const errors = validateCasePayload(req.body);
     if (errors.length > 0) {
